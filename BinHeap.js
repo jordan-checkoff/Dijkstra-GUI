@@ -1,7 +1,9 @@
 
-class BinHeap {
+export class BinHeap {
+    //Private
+
     #queue = [];
-    #length = 0;
+    #len = 0;
 
     #parent(i) {
         return Math.floor((i-1)/2);
@@ -17,51 +19,68 @@ class BinHeap {
         this.#queue[j] = x;
     }
 
+
+    //Public
+
     get len() {
-        return this.#length;
+        return this.#len;
     }
 
     insert(val, p) {
         this.#queue.push({data: val, priority: p});
-        for (let i = this.#length; this.#parent(i) >=0; i=this.#parent(i)) {
-            if (this.#queue[this.#parent(i)].priority > p) {
-                this.#swap(i, this.#parent(i));
-            }
-        }
-        this.#length++;
-    }
-
-    remove_min() {
-        if (this.#length == 0) {
-            throw new Error("BinHeap is empty");
-        }
-        this.#swap(0, this.#length-1);
-        let min = this.#queue.pop();
-        this.#length--;
-        let i = 0;
-        while (this.#child(i) < this.#length) {
-            if (this.#child(i)+1 >= this.#length) {
-                if (this.#queue[i].priority > this.#queue[this.#child(i)].priority) {
-                    this.#swap(i, this.#child(i));
-                    i = this.#child(i);
-                } else {
-                    break;
-                }
-            } else if (this.#queue[this.#child(i)].priority < this.#queue[this.#child(i)+1].priority) {
-                if (this.#queue[i].priority > this.#queue[this.#child(i)].priority) {
-                    this.#swap(i, this.#child(i));
-                    i = this.#child(i);
-                }
-            } else if (this.#queue[i].priority > this.#queue[this.#child(i)+1].priority) {
-                this.#swap(i, this.#child(i)+1);
-                i = this.#child(i)+1;
+        let i = this.#len;
+        let parent = this.#parent(i);
+        while (parent >=0) {
+            if (this.#queue[parent].priority > p) {
+                this.#swap(i, parent);
             } else {
                 break;
             }
+            i=this.#parent(i);
+            parent = this.#parent(i);
+        }
+        this.#len++;
+    }
 
+    remove_min() {
+        if (this.#len == 0) {
+            throw new Error("BinHeap is empty");
+        }
+        this.#swap(0, this.#len-1);
+        let min = this.#queue.pop();
+        this.#len--;
+
+        let i = 0;
+        let child = this.#child(i)
+        while (child < this.#len) {
+            if (child+1 >= this.#len || this.#queue[child].priority < this.#queue[child+1].priority) {
+                if (this.#queue[i].priority > this.#queue[child].priority) {
+                    this.#swap(i, child);
+                    i = child;
+                    child = this.#child(i);
+                } else {
+                    break;
+                }
+            } else if (this.#queue[i].priority > this.#queue[child+1].priority) {
+                this.#swap(i, child+1);
+                i = child+1;
+                child = this.#child(i);
+            } else {
+                break;
+            }
         }
         return min;
     }
 }
 
-let x = new BinHeap();
+// let x = new BinHeap();
+
+// for (i=0; i<50;i++) {
+//     let num = Math.floor(100*Math.random());
+//     x.insert(i, num);
+// }
+
+// for (i=0; i< 50; i++) {
+//     let num = x.remove_min();
+//     console.log(num);
+// }
