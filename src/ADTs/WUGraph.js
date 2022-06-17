@@ -20,11 +20,11 @@ export class WUGraph {
         }
         let l = this.#list[u];
         for (let i=0; i < l.length; i++) {
-            if (l[i].node == v) {
+            if (l[i].node === v) {
                 l[i].weight = w;
                 let m = this.#list[v];
                 for (let j=0; j < m.length; m++) {
-                    if (m[j].node == u) {
+                    if (m[j].node === u) {
                         m[j].weight = w;
                         return;
                     }
@@ -38,7 +38,7 @@ export class WUGraph {
     get_edge(u, v) {
         let w = this.#list[u];
         for (let i = 0; i < w.length; i++) {
-            if (w[i].node == v) {
+            if (w[i].node === v) {
                 return w[i].weight;
             }
         }
@@ -60,7 +60,7 @@ export class WUGraph {
         let todo = new BinHeap();
         let done = new Array(this.#len).fill(false);
         todo.insert(start, 0);
-        while (todo.len != 0 && finished == false) {
+        while (todo.len !== 0 && finished === false) {
             let v = todo.remove_min().data;
             if (!done[v]) {
                 if (f(v)) {

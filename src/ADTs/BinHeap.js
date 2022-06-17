@@ -43,7 +43,7 @@ export class BinHeap {
     }
 
     remove_min() {
-        if (this.#len == 0) {
+        if (this.#len === 0) {
             throw new Error("BinHeap is empty");
         }
         this.#swap(0, this.#len-1);
