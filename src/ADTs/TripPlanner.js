@@ -3,16 +3,29 @@ import { WUGraph } from './WUGraph.js';
 
 export class tripPlanner {
 
-    #map = new WUGraph();
+    #map;
+    #points = [];
     #pointtonode = {};
     #nodetopoint = {};
+
+    constructor(m = new WUGraph(), p = [], pn = {}, np = {}) {
+        this.#map = m;
+        this.#points = p;
+        this.#pointtonode = pn;
+        this.#nodetopoint = np;
+    }
 
     #add_point(pos) {
         if (!(pos in this.#pointtonode)) {
             this.#pointtonode[pos] = this.#map.len;
             this.#nodetopoint[this.#map.len] = pos;
             this.#map.add_node();
+            this.#points.push(pos);
         }
+    }
+
+    get points() {
+        return this.#points;
     }
 
     add_road(p1,p2) {
@@ -22,6 +35,7 @@ export class tripPlanner {
         let n1 = this.#pointtonode[p1];
         let n2 = this.#pointtonode[p2];
         this.#map.set_edge(n1,n2,w);
+        return new tripPlanner(this.#map, this.#points, this.#pointtonode, this.#nodetopoint);
     }
 
     shortest_path(p1, p2) {
