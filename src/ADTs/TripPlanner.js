@@ -3,17 +3,11 @@ import { WUGraph } from './WUGraph.js';
 
 export class tripPlanner {
 
-    #map;
+    #map = new WUGraph();
     #points = [];
     #pointtonode = {};
     #nodetopoint = {};
-
-    constructor(m = new WUGraph(), p = [], pn = {}, np = {}) {
-        this.#map = m;
-        this.#points = p;
-        this.#pointtonode = pn;
-        this.#nodetopoint = np;
-    }
+    #dims = {minx: -1, maxx: 1, miny: -1, maxy: 1};
 
     #add_point(pos) {
         if (!(pos in this.#pointtonode)) {
@@ -21,11 +15,41 @@ export class tripPlanner {
             this.#nodetopoint[this.#map.len] = pos;
             this.#map.add_node();
             this.#points.push(pos);
+            if (parseInt(pos[0]) + 1 > this.#dims.maxx) {
+                this.#dims.maxx = parseInt(pos[0]) + 1;
+            } else if (parseInt(pos[0]) - 1 < this.#dims.minx) {
+                this.#dims.minx = parseInt(pos[0]) - 1;
+            }
+            if (parseInt(pos[1]) + 1 > this.#dims.maxy) {
+                this.#dims.maxy = parseInt(pos[1]) + 1;
+            } else if (parseInt(pos[1]) - 1 < this.#dims.miny) {
+                this.#dims.miny = parseInt(pos[1]) - 1;
+            }
         }
+    }
+
+    #copy() {
+        let x = new tripPlanner();
+        x.#map = this.#map;
+        x.#points = this.#points;
+        x.#pointtonode = this.#pointtonode;
+        x.#nodetopoint = this.#nodetopoint;
+        x.#dims = this.#dims;
+        return x;
     }
 
     get points() {
         return this.#points;
+    }
+
+    get dims() {
+        return this.#dims;
+    }
+
+    get_all_roads() {
+        let x = this.#map.get_all_edges();
+        let y = x.map((e)=>[this.#nodetopoint[e[0]], this.#nodetopoint[e[1]]]);
+        return y;
     }
 
     add_road(p1,p2) {
@@ -35,7 +59,7 @@ export class tripPlanner {
         let n1 = this.#pointtonode[p1];
         let n2 = this.#pointtonode[p2];
         this.#map.set_edge(n1,n2,w);
-        return new tripPlanner(this.#map, this.#points, this.#pointtonode, this.#nodetopoint);
+        return this.#copy();
     }
 
     shortest_path(p1, p2) {

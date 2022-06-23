@@ -45,6 +45,18 @@ export class WUGraph {
         return Infinity;
     }
 
+    get_all_edges() {
+        let x = [];
+        for (let i=0; i < this.#list.length; i++) {
+            for (let j=0; j < this.#list[i].length; j++) {
+                if (i > this.#list[i][j].node) {
+                    x.push([i,this.#list[i][j].node]);
+                }
+            }
+        }
+        return x;
+    }
+
     get_adjacent(u) {
         if (this.#list[u]) {
             return this.#list[u].map((x)=>x.node);
@@ -85,7 +97,7 @@ export class WUGraph {
 }
 
 
-// let x = new WUGraph;
+// let x = new WUGraph();
 
 // x.add_node();
 // x.add_node();
@@ -95,4 +107,5 @@ export class WUGraph {
 // x.add_edge(0,3,3);
 // x.add_edge(3,2,3);
 
-// console.log(x.get_edge(0,1));
+
+// console.log(x.get_all_edges());

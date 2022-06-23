@@ -1,25 +1,30 @@
-import React from 'react';
+import React, {useState, useRef, useLayoutEffect } from 'react';
+import Point from './Point';
+import Road from './Road';
 
-function Point({pos}) {
+function Graph({t, shortest}) {
+    let [clicked, changeClicked] = useState("");
+    const [width, height] = useWindowSize();
+    const ref = useRef();
+
+    function useWindowSize() {
+        const [size, setSize] = useState([0, 0]);
+        useLayoutEffect(() => {
+          function updateSize() {
+            setSize([ref.current.offsetWidth, ref.current.offsetHeight]);
+          }
+          window.addEventListener('resize', updateSize);
+          updateSize();
+          return () => window.removeEventListener('resize', updateSize);
+        }, []);
+        return size;
+      }
+
     return (
-        <div style={{width: "20px",
-                    height: "20px",
-                    backgroundColor: "blue",
-                    marginBottom: "20px",
-                    position: "absolute",
-                    // top: (parseInt(pos[1]) * 10).toString() + "px",
-                    // left: (parseInt(pos[0]) * 10).toString() + "px"
-                    top: parseInt(pos[1]) * 10,
-                    left: parseInt(pos[0]) * 10
-                }}></div>
-    )
-}
-
-function Graph({t}) {
-
-    return (
-        <div style={{width:"100%", height:"200px", backgroundColor:"yellow"}}>
-            {t.points.map((pos) => <Point key={pos} pos={pos} />)}
+        <div style={{height: '90vh', flex: 5, paddingRight:20, backgroundColor:"yellow", position:"relative"}} ref={ref}>
+            {t.points.map((pos) => <Point key={pos} pos={pos} dims={t.dims} changeClicked={changeClicked} />)}
+            {t.get_all_roads().map((x) => <Road key={x} road={x} dims={t.dims} size={{width:width,height:height}} path={shortest} />)}
+            <p>{clicked}</p>
         </div>
     )
 }
