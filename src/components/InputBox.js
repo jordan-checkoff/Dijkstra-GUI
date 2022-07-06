@@ -1,7 +1,24 @@
 import React, {useState} from 'react';
 import PositionInput from './PositionInput';
 
-function InputBox({t,changeT, shortest, changeShortest}) {
+
+function ShortestInput({num, selected}) {
+    return (
+        <div style={{marginBottom:"10px", marginTop:"10px", display:'flex', alignItems: 'center'}}>
+            <label style={styles.marginRight}>Endpoint {num}:</label>
+            <p style={styles.marginRight}>{selected.length > num-1 ? selected[num-1][0] : ''}</p>
+            <p>{selected.length > num-1 ? selected[num-1][1] : ''}</p>
+        </div>
+    )
+}
+
+let styles = {
+    marginRight: {
+        marginRight: "10px"
+    }
+}
+
+function InputBox({t,changeT, shortest, changeShortest, selected}) {
 
     let [lat1, changeLat1] = useState("");
     let [lon1, changeLon1] = useState("");
@@ -24,13 +41,20 @@ function InputBox({t,changeT, shortest, changeShortest}) {
 
     return (
         <div style={{backgroundColor: 'lightgray', padding: 20}}>
-            <PositionInput num="1" lat={lat1} lon={lon1} changeLat={changeLat1} changeLon={changeLon1} />
-
-            <PositionInput num="2" lat={lat2} lon={lon2} changeLat={changeLat2} changeLon={changeLon2} />
-
-            <button style={{marginRight: 10}} onClick={() => addRoad(lat1, lon1, lat2, lon2)}>Add Road</button>
-            <button onClick={() => shortestPath(lat1, lon1, lat2, lon2)}>Shortest Path</button>
-            {/* <p>{shortest}</p> */}
+            <div style={{borderBottom:'2px groove lightgray', paddingBottom: '20px'}}>
+                <h2>Add Road</h2>
+                <PositionInput num="1" lat={lat1} lon={lon1} changeLat={changeLat1} changeLon={changeLon1} />
+                <PositionInput num="2" lat={lat2} lon={lon2} changeLat={changeLat2} changeLon={changeLon2} />
+                <button style={{width: '100%'}} onClick={() => addRoad(lat1, lon1, lat2, lon2)}>Add Road</button>
+            </div>
+            
+            <div>
+                <h2>Find Shortest Path</h2>
+                <p>Click two points to find the shortest path between them.</p>
+                <ShortestInput num="1" selected={selected} />
+                <ShortestInput num="2" selected={selected} />
+                <button style={{width: '100%'}} onClick={() => shortestPath(selected[0][0], selected[0][1], selected[1][0], selected[1][1])}>Shortest Path</button>
+            </div>
         </div>
     )
 }

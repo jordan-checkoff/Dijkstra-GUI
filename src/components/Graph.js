@@ -2,8 +2,7 @@ import React, {useState, useRef, useLayoutEffect } from 'react';
 import Point from './Point';
 import Road from './Road';
 
-function Graph({t, shortest}) {
-    let [clicked, changeClicked] = useState("");
+function Graph({t, shortest, selected, changeSelected}) {
     const [width, height] = useWindowSize();
     const ref = useRef();
 
@@ -22,9 +21,8 @@ function Graph({t, shortest}) {
 
     return (
         <div style={{height: '90vh', flex: 5, paddingRight:20, backgroundColor:"yellow", position:"relative"}} ref={ref}>
-            {t.points.map((pos) => <Point key={pos} pos={pos} dims={t.dims} changeClicked={changeClicked} />)}
+            {t.points.map((pos) => <Point key={pos} pos={pos} dims={t.dims} selected={selected} changeSelected={changeSelected} />)}
             {t.get_all_roads().map((x) => <Road key={x} road={x} dims={t.dims} size={{width:width,height:height}} path={shortest} />)}
-            <p>{clicked}</p>
         </div>
     )
 }
