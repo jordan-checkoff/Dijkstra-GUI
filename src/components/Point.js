@@ -6,10 +6,9 @@ function Coord({pos}) {
     )
 }
 
-function Point({pos, dims, selected, changeSelected}) {
+function Point({pos, dims, selected, changeSelected, shortest, changeShortest}) {
 
     let [hover, setHover] = useState(false);
-    let [sel, setSel] = useState(false);
 
     function left(pos, dims) {
         let x = parseInt(pos[0]) - dims.minx;
@@ -33,11 +32,13 @@ function Point({pos, dims, selected, changeSelected}) {
     }
 
     function pointClick() {
-        if (inSelected(pos)) {
+        if (shortest.length > 0) {
+            changeShortest({'roads': [], 'points': []})
+            changeSelected([pos]);
+        } else if (inSelected(pos)) {
             let x = [...selected];
             x.splice(inSelected(pos)-1,1);
             changeSelected(x);
-            setSel(false);
         } else if (selected.length === 2) {
             console.log('you can only select two points');
         } else {
@@ -46,16 +47,27 @@ function Point({pos, dims, selected, changeSelected}) {
             //     x[i] = [selected[i][0], selected[i][1]];
             // }
             x.push(pos);
-            console.log(x);
             changeSelected(x);
-            setSel(true);
+        }
+    }
+
+    function color() {
+        if (inSelected(pos)) {
+            return 'blue'
+        } else {
+            for (let i = 0; i < shortest.length; i++) {
+                if (shortest[i][0] === pos[0] && shortest[i][1] === pos[1]) {
+                    return 'green';
+                }
+            }
+            return 'red';
         }
     }
 
     return (
         <div style={{width: "20px",
                     height: "20px",
-                    backgroundColor: sel ? "green" : "blue",
+                    backgroundColor: color(),
                     marginBottom: "20px",
                     position: "absolute",
                     top: top(pos, dims),

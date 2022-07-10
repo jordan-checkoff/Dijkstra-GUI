@@ -6,17 +6,27 @@ import Graph from './components/Graph';
 
 function App() {
 
-    let [t,changeT] = useState(new tripPlanner());
-    let [shortest, changeShortest] = useState([]);
+    const [t,changeT] = useState(new tripPlanner());
+    const [shortest, changeShortest] = useState({'roads': [], 'points': []});
     const [selected, changeSelected] = useState([]);
 
     return (
-        <div style={{width: '100%', height: '90vh', display: 'flex', justifyContent: 'space-around', alignItems: 'stretch'}}>
-            <Graph t={t} shortest={shortest} selected={selected} changeSelected={changeSelected} />
+        <div style={styles.background}>
+            <Graph t={t} shortest={shortest} selected={selected} changeSelected={changeSelected} changeShortest={changeShortest} />
             <InputBox t={t} changeT={changeT} shortest={shortest} changeShortest={changeShortest} selected={selected} />
         </div>
     )
-  }
+}
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const styles = {
+    background: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'stretch'
+    }
+}
+
+const root = ReactDOM.createRoot(document.getElementsByTagName('body')[0]);
 root.render(<App />);
