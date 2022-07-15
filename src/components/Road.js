@@ -55,7 +55,7 @@ function Road({road, dims, path, size}) {
             width: width(),
             height: "1px",
             backgroundColor: included() ? "green" : "red",
-            borderWidth: '1px',
+            borderWidth: included() ? 3 : 1,
             borderStyle: 'solid', 
             borderColor: included() ? "green" : "red",
             position: "absolute",

@@ -23,7 +23,7 @@ export class WUGraph {
             if (l[i].node === v) {
                 l[i].weight = w;
                 let m = this.#list[v];
-                for (let j=0; j < m.length; m++) {
+                for (let j=0; j < m.length; j++) {
                     if (m[j].node === u) {
                         m[j].weight = w;
                         return;

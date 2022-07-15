@@ -70,6 +70,9 @@ export class tripPlanner {
         let preds = this.#map.get_preds(n1, (v) => false);
 
         for (let i = n2; i !== n1; i=preds[i]) {
+            if (i === preds[i]) {
+                return;
+            }
             route.unshift(this.#nodetopoint[i]);
         }
 
