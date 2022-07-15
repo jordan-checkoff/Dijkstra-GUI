@@ -1,0 +1,2 @@
+body{height:100vh;margin:0;width:100vw}.main div:first-child{flex-grow:1}.main div:last-child{width:400px}@media (max-width:800px){.main{flex-direction:column}body{height:1000px}.main div:last-child{width:auto}}
+/*# sourceMappingURL=main.070ee63d.css.map*/
