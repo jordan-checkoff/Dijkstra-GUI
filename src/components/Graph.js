@@ -30,7 +30,6 @@ function Graph({t, shortest, selected, changeSelected, changeShortest}) {
 const styles = {
   graph: {
     height: '100%',
-    flex: 5,
     paddingRight:20,
     backgroundColor: 'aliceblue',
     position:"relative"

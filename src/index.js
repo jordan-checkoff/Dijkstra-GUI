@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import InputBox from './components/InputBox';
 import { tripPlanner } from './ADTs/TripPlanner';
 import Graph from './components/Graph';
+import './index.css';
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
     const [selected, changeSelected] = useState([]);
 
     return (
-        <div style={styles.background}>
+        <div className="main" style={styles.background}>
             <Graph t={t} shortest={shortest} selected={selected} changeSelected={changeSelected} changeShortest={changeShortest} />
             <InputBox t={t} changeT={changeT} shortest={shortest} changeShortest={changeShortest} selected={selected} />
         </div>

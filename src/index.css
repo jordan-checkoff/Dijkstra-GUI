@@ -1,0 +1,29 @@
+body {
+    width:100vw;
+    height:100vh;
+    margin:0;
+}
+
+.main div:first-child {
+    flex-grow: 1;
+}
+
+.main div:last-child {
+    width: 400px;
+}
+
+@media (max-width: 800px) {
+    .main {
+        flex-direction: column;
+    }
+    body {
+        height: 1000px;
+    }
+   
+    /* .main div:first-child {
+        display: block !important;
+    } */
+    .main div:last-child {
+        width: auto;
+    }
+}

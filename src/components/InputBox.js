@@ -125,7 +125,6 @@ const styles = {
     sidebar: {
         backgroundColor: '#a9b4eb',
         padding: '10px 20px',
-        flex: 2
     },
     divider: {
         border: '1px ridge darkblue',
