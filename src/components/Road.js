@@ -28,13 +28,13 @@ function Road({road, dims, path, size}) {
     function roadLeft(road) {
         let x1 = left(road[0], dims);
         let x2 = left(road[1], dims);;
-        return (x1 + x2)/2 - width()/2;
+        return (x1 + x2)/2 - width()/2 + 20;
     }
 
     function roadTop() {
         let y1 = top(road[0], dims);
         let y2 = top(road[1], dims);
-        return (y1 + y2)/2;
+        return (y1 + y2)/2 + 20;
     }
 
     function angle() {
@@ -50,8 +50,8 @@ function Road({road, dims, path, size}) {
         return path.includes(r1) || path.includes(r2);
     }
 
-    return (
-        <div style={{
+    const styles = {
+        'road': {
             width: width(),
             height: "1px",
             backgroundColor: included() ? "green" : "red",
@@ -62,8 +62,11 @@ function Road({road, dims, path, size}) {
             top: roadTop(),
             left: roadLeft(road),
             transform: 'rotate(' + angle() + 'rad)'
-        }}>
-        </div>
+        }
+    }
+
+    return (
+        <div style={styles.road}></div>
     )
 }
 

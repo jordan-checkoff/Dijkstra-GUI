@@ -21,9 +21,14 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
     let [lon2, changeLon2] = useState("");
     let [time, changeTime] = useState("");
     let [nroads, changenroads] = useState("");
+    let [noroute, changenoroute] = useState(false);
 
-    function arrayToCoord(x) {
-        return shortest['points'].length > 0 ? "(" + x[0] + ", " + x[1] + ")" : "";
+    function arrayToCoord() {
+        let output = "";
+        for (let i=0; i < shortest["points"].length; i++) {
+            output += "(" + shortest["points"][i][0] + ", " + shortest["points"][i][1] + ") => ";
+        }
+        return output.slice(0, -3);
     }
 
     function addRoad(l1, lo1, l2, lo2) {
@@ -37,12 +42,17 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
         let end = performance.now();
         let difference = end - start;
         let y = [];
-        for (let i = 0; i < x.length - 1; i++) {
-            y.push(x[i].toString() + ", " + x[i+1].toString());
+        if (x) {
+            for (let i = 0; i < x.length - 1; i++) {
+                y.push(x[i].toString() + ", " + x[i+1].toString());
+            }
+            changeShortest({'roads': y, 'points': x});
+            changenoroute(false);
+        } else {
+            changenoroute(true);            
         }
-
         changeTime(difference.toString() + " ms")
-        changeShortest({'roads': y, 'points': x});
+
     }
 
     function addRandom(nroads) {
@@ -84,12 +94,12 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
 
     return (
         <div style={styles.sidebar}>
-            <div style={{width: "100%"}}>
+            <div style={styles.sidebarsect}>
                 <h2>Add Roads</h2>
                 <PositionInput num="1" lat={lat1} lon={lon1} changeLat={changeLat1} changeLon={changeLon1} />
                 <PositionInput num="2" lat={lat2} lon={lon2} changeLat={changeLat2} changeLon={changeLon2} />
                 <button style={{width: '100%'}} onClick={() => addRoad(lat1, lon1, lat2, lon2)}>Add Road</button>
-                <p style={{"textAlign":"center"}}>or</p>
+                <p style={{textAlign:"center"}}>or</p>
                 <div style={{display:'flex', justifyContent: 'space-between'}}>
                     <input style={{width: "45%"}} type="text" placeholder={"# of roads"} value={nroads} onChange={x => changenroads(x.target.value)} />
                     <button style={{width: '45%'}} onClick={() => addRandom(nroads)}>Add Random Roads</button>
@@ -98,22 +108,22 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
 
             <hr style={styles.divider} />
             
-            <div style={{width: "100%"}}>
+            <div style={styles.sidebarsect}>
                 <h2>Find Shortest Path</h2>
                 <p>Click two points to find the shortest path between them.</p>
                 <ShortestInput num="1" selected={selected} />
                 <ShortestInput num="2" selected={selected} />
                 <button style={{width: '100%'}} onClick={() => shortestPath(selected[0][0], selected[0][1], selected[1][0], selected[1][1])}>Calculate Shortest Path</button>
+                <p>{noroute && "There is no path that connects those two points."}</p>
                 <p>Shortest path:</p>
                 <div style={{overflowX: 'scroll', overflowY: 'scroll', width: '100%', height: 40, backgroundColor: 'lightgray', border: '2px solid gray', padding: 5}}>
-                    {shortest['points'].slice(0,-1).map((x) => <p style={{display: "inline-block", margin: "0 4px"}}>{arrayToCoord(x) + " =>"}</p>)}
-                    <p style={{display: "inline-block", margin: "0 4px"}}>{arrayToCoord(shortest['points'][shortest['points'].length-1])}</p>
+                    <p style={{display: "inline-block", margin: "0 4px"}}>{arrayToCoord()}</p>
                 </div>
             </div>
 
             <hr style={styles.divider} />
 
-            <div>
+            <div style={styles.sidebarsect}>
                 <h2>Analyze Results</h2>
                 <p>{time}</p>
             </div>
@@ -125,6 +135,7 @@ const styles = {
     sidebar: {
         backgroundColor: '#a9b4eb',
         padding: '10px 20px',
+        overflowY: 'scroll'
     },
     divider: {
         border: '1px ridge darkblue',
@@ -132,6 +143,9 @@ const styles = {
     },
     marginRight: {
         marginRight: "10px"
+    },
+    sidebarsect: {
+        width: '100%'
     }
 }
 
