@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/Map/static/css/main.070ee63d.css",
-    "main.js": "/Map/static/js/main.db060a1d.js",
-    "index.html": "/Map/index.html",
-    "main.070ee63d.css.map": "/Map/static/css/main.070ee63d.css.map",
-    "main.db060a1d.js.map": "/Map/static/js/main.db060a1d.js.map"
+    "main.css": "/Dijkstra-GUI/static/css/main.070ee63d.css",
+    "main.js": "/Dijkstra-GUI/static/js/main.db060a1d.js",
+    "index.html": "/Dijkstra-GUI/index.html",
+    "main.070ee63d.css.map": "/Dijkstra-GUI/static/css/main.070ee63d.css.map",
+    "main.db060a1d.js.map": "/Dijkstra-GUI/static/js/main.db060a1d.js.map"
   },
   "entrypoints": [
     "static/css/main.070ee63d.css",
