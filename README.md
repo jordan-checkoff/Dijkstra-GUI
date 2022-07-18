@@ -18,8 +18,9 @@ I created a map data structure to serve as the back-end for my GUI. The data str
 ### Algorithms
 **Dijkstra's algorithm** - I used Dijkstra's algorithm to calculate the shortest path between two nodes on the graph. I chose to use Dijkstra's algorithm because it has a better time complexity than Bellman-Ford's algorithm and can be used since there are no negative edges.
 
-## Efficiency
-!(graph.png)
+## Complexity
+Djikstra's algorith has complexity O(|E| + |V|log|V|). I tested to make sure this held for my data structure by taking the average of the time it took to get the shortest distance between each pair of points, which I repeated for maps of different road lengths. I plotted this data in the graph below, which supports the expected time compmlexity.
+![graph](graph.png)
 
 ## How to Use
 ### Add Edges
