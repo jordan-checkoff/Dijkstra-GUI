@@ -18,6 +18,9 @@ I created a map data structure to serve as the back-end for my GUI. The data str
 ### Algorithms
 **Dijkstra's algorithm** - I used Dijkstra's algorithm to calculate the shortest path between two nodes on the graph. I chose to use Dijkstra's algorithm because it has a better time complexity than Bellman-Ford's algorithm and can be used since there are no negative edges.
 
+## Efficiency
+!(graph.png)
+
 ## How to Use
 ### Add Edges
 Users can either manually add each edge or add a specified number of random edges. To manually add an edge, enter the x and y coordinate for each endpoint of the edge in the topmost inputs, and then click "Add Road". To add a specified number of random edges, enter the number of edges where it says "# of roads", and then click "Add Random Roads". 
