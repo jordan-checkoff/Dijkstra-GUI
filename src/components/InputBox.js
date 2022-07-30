@@ -13,6 +13,7 @@ function ShortestInput({num, selected}) {
     )
 }
 
+
 function InputBox({t,changeT, shortest, changeShortest, selected}) {
 
     let [lat1, changeLat1] = useState("");
@@ -22,6 +23,27 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
     let [time, changeTime] = useState("");
     let [nroads, changenroads] = useState("");
     let [noroute, changenoroute] = useState(false);
+
+    // function average() {
+    //     let points = t.points;
+    //     let total = 0;
+    //     let num = 0;
+    //     for (let h=0; h < 1; h++) {
+    //         for (let i=0; i < points.length; i++) {
+    //             for (let j=0; j < points.length; j++) {
+    //                 let start = performance.now();
+    //                 t.shortest_path(points[i], points[j]);
+    //                 let end = performance.now();
+    //                 let diff = end-start;
+    //                 total += diff;
+    //                 num++;
+    //             }
+    //             console.log(i);
+    //         }
+    //     }
+    //     let average = total / num;
+    //     console.log(average);
+    // }
 
     function arrayToCoord() {
         let output = "";
@@ -126,6 +148,7 @@ function InputBox({t,changeT, shortest, changeShortest, selected}) {
             <div style={styles.sidebarsect}>
                 <h2>Analyze Results</h2>
                 <p>{time}</p>
+                {/* <button onClick={average}>Average</button> */}
             </div>
         </div>
     )

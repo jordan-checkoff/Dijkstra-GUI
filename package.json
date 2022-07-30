@@ -1,7 +1,7 @@
 {
   "name": "mapmaker",
   "version": "0.1.0",
-  "homepage": "https://jordan-checkoff.github.io/Map",
+  "homepage": "https://jordan-checkoff.github.io/Dijkstra-GUI",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
